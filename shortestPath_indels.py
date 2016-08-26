@@ -8,8 +8,6 @@ import numpy
 import copy
 
 
-#TODO TODO TODO TODO TODO TODO
-#implement preprocessing for graph if gap not fully covered, returning start and stop of covered parts
 
 
 
