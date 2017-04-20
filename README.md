@@ -1,12 +1,20 @@
 # AGapEs
 Gap filling based on template sequence for ancient DNA (aDNA) data
 
-## Requirements
-* python (2.7)
 
-In addition, if available:
+
+
+## Requirements
+
+[![Snakemake](https://img.shields.io/badge/snakemake-≥3.5.2-brightgreen.svg?style=flat-square)](http://snakemake.bitbucket.org)
+* python
+* bwa
 * samtools
 * bedtools
+
+
+## Preprocessing
+
 
 
 ## Running AGapEs
