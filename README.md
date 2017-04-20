@@ -1,5 +1,5 @@
 # AGapEs
-Gap filling based on template sequence for ancient DNA (aDNA) data
+Gap filling based on template sequence for ancient DNA (aDNA) data [1]
 
 ### Requirements
 
@@ -22,7 +22,7 @@ Each snakefile ends with a "checkpoint" that can be used to e.g. check template 
 
 ## Preprocessing
 
-Markers and gap template sequences can be computed using the [FPSAC](https://github.com/cchauve/FPSAC) pipeline. 
+Markers and gap template sequences can be computed using the [FPSAC](https://github.com/cchauve/FPSAC) [2] pipeline. 
 
 ```
 install_FPSAC.sh
@@ -48,3 +48,6 @@ snakemake --snakefile finishing.snakefile -j <N>
 
 
 # References
+[1] Luhmann, Nina, Daniel Doerr, and Cedric Chauve. "Improved assemblies and comparison of two ancient Yersinia pestis genomes." bioRxiv (2017): 073445.
+
+[2] Rajaraman, Ashok, Eric Tannier, and Cedric Chauve. "FPSAC: fast phylogenetic scaffolding of ancient contigs." Bioinformatics 29.23 (2013): 2987-2994.
