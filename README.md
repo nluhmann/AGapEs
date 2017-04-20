@@ -1,7 +1,7 @@
 # AGapEs
 Gap filling based on template sequence for ancient DNA (aDNA) data
 
-## Requirements
+### Requirements
 
 [![Snakemake](https://img.shields.io/badge/snakemake-≥3.5.2-brightgreen.svg?style=flat-square)](http://snakemake.bitbucket.org)
 * python
@@ -10,26 +10,36 @@ Gap filling based on template sequence for ancient DNA (aDNA) data
 * bedtools
 * FPSAC
 
+## Pipeline
+We split the pipeline into 4 snakefiles that should be run successively. If possible, we suggest to allow running the snakefile with multiple cores (parameter -j), since many jobs in the pipeline can be run in parallel.
+Each snakefile ends with a "checkpoint" that can be used to e.g. check template sequences or solve conflicts based on gap filling results.
 
-# Input and preprocessing
+## Input
+* aDNA reads in fasta/fastq format
+* assembled contigs of aDNA reads in fasta format
+* assembled reference sequences in fasta format
+* phylogenetic tree in newick format, position of the ancient sample marked with @
+
+## Preprocessing
 
 Markers and gap template sequences can be computed using the [FPSAC](https://github.com/cchauve/FPSAC) pipeline. 
 
-
-# Filling gaps with AGapEs
-
-The following scripts require a template gap sequence and a read mapping in sam format on this template. The assemblies folder should contain an assembly for each gap in fasta format as a concatenation of marker and template gap sequence, and a corresponding read mapping in sam/bam format. The templates folder contains only the templates.
-
 ```
-run_gapFilling.sh <assemblies folder> <templates folder>
+install_FPSAC.sh
+snakemake --snakefile preprocessing.snakefile -j <N>
 ```
 
-Corresponding templates and mappings are indicated by the same gapID. The script provides the required preprocessing of the mappings and calls the central AGapEs implementation for each gap: 
+FPSAC computes the template sequences based on a multiple alignment of the respective extant gap sequences. If gaps get too larger because of inadequate marker coverage, this alignment can fail.
+
+## Filling gaps with AGapEs
 
 ```
-python parseAssemblyMappings_Indels.py <sam file> <template> <assembly> <outfile>
+snakemake --snakefile run_gapFilling.snakefile -j <N>
+snakemake --snakefile run_partial_gapFilling.snakefile -j <N>
 ```
 
-The repository also contains scripts to fill gaps partially, a bash script will be provided at some point.
+## Finishing
 
-# Finishing
+```
+snakemake --snakefile finishing.snakefile -j <N>
+```
