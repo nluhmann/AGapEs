@@ -13,13 +13,13 @@ mappingFile = sys.argv[1]
 
 
 #INPUT: corresponding Fitch template fasta
-fitch = sys.argv[2]
+#fitch = sys.argv[2]
 
 #INPUT: potential assembly fasta file (we need the start and end of each gap)
-assFile = sys.argv[3]
+assFile = sys.argv[2]
 
 #output file
-output = sys.argv[4]
+output = sys.argv[3]
 
 t0 = time.time()
 
@@ -38,16 +38,14 @@ def complement(sequence):
 #############################################################################################  
 ### get template sequence for gap from fitch reconstruction
 
-
-
-if os.path.isfile(fitch):
-	
-	with open (fitch, "r") as file:
-		template_fitch = file.read().replace('\n', '')
-	file.close()
-else:
-	print "No template sequence available"
-	template_fitch = ""
+# if os.path.isfile(fitch):
+# 	
+# 	with open (fitch, "r") as file:
+# 		template = file.read().replace('\n', '')
+# 	file.close()
+# else:
+# 	print "No template sequence available"
+# 	template = ""
 
 #############################################################################################  
 ### get start and stop for gap from assembly file
@@ -142,7 +140,7 @@ def testCoverage(mappings, gapStart, gapEnd):
 #read cigar and return list of start and stop tuple of Insertions in the read
 def readcigarInsertions(cigar):
 	insertions = []
-	pos =1
+	pos =0
 	while cigar:
 		#suppose the cigar starts with a match
 		matchM = re.findall(r'^(\d+)M', cigar)
@@ -244,7 +242,7 @@ for line in file:
 				#there are no InDels in the mapping:
 				elif not "I" in cigar and not "D" in cigar:
 					matchM = re.findall(r'(\d+)M', cigar)
-					stop = int(readstart) + int(matchM[0]) 
+					stop = int(readstart) + int(matchM[0])
 				elif "I" in cigar and "D" in cigar:
 					print "Not handled read with mapping: "+cigar
 					continue
@@ -257,8 +255,9 @@ for line in file:
 testBool = testCoverage(readMappings, gapStart, gapEnd)
 print "Coverage test: "+str(testBool)
 
-#if len(readMappings) > 0 and testBool:
-if len(readMappings) > 0:
+
+if len(readMappings) > 0 and testBool:
+#if len(readMappings) > 0:
 
 	sortedMappings = sorted(readMappings, key=itemgetter(1,2))
 	ret = shortestPath_indels.constructGraph(sortedMappings,gapStart,gapEnd,template)
@@ -269,10 +268,12 @@ if len(readMappings) > 0:
 
 	path = shortestPath_indels.shortestPath(graph,first,last)
 	sequence = shortestPath_indels.reconstructSequence(path,graph)
+
 	if not sequence == "":	
 		cut_index = shortestPath_indels.freeEndGap(sequence,lastNodeSeq)
+		
 		if cut_index == 0:
-			cut_sequence = sequence[0:cut_index+1]
+			cut_sequence = sequence[0:cut_index]
 		else:
 			cut_sequence = sequence[0:cut_index+1]
 	else:
@@ -288,8 +289,7 @@ if len(readMappings) > 0:
 		distance = rev_distance
 		cut_sequence = rev_sequence
 	cut_sequence = re.sub('D+', '', cut_sequence)
-	if not cut_sequence == "":
-		print "total distance: "+str(distance)
+	print "total distance: "+str(distance)
 	if len(sequence) > 0:
 		print "relative distance: "+str(float(distance)/len(sequence))
 	else:
@@ -298,41 +298,21 @@ if len(readMappings) > 0:
 	print cut_sequence
 	print "template sequence:\n"
 	print template
-	
-	outputsequence = ""
-	if template == template_fitch:
-		outputsequence = cut_sequence
-	else:
-		print "output reverse complement sequence"
-		outputsequence = rev_sequence
-		
 	print "------------------------------------------------"
-	if not outputsequence == "":
-		out = open(output,"w")
-		out.write(">"+savedLine.rstrip("\n")+" "+str(distance)+"\n")
-		out.write(outputsequence+"\n")
-		out.close()
-	elif not testBool:
-		print "NO COVERING READS"
-		print "------------------------------------------------"
-		out = open(output+".uncov","w")
-		out.write(">"+savedLine)
-		out.write("Covered: "+str(testBool)+"\n")
-		out.close()
-	else:
-		print "Gap of length 0?"
-		print "------------------------------------------------"
-		out = open(output,"w")
-		out.write(">"+savedLine.rstrip("\n")+" "+str(distance)+"\n")
-		out.write(outputsequence+"\n")
-		out.close()
+	out = open(output,"w")
+	out.write(">"+savedLine.rstrip("\n")+" "+str(distance)+"\n")
+	out.write(cut_sequence+"\n")
+	out.close()
 else:
 	print "NO COVERING READS"
 	print "------------------------------------------------"
-	out = open(output+".uncov","w")
-	out.write(">"+savedLine)
+#	out = open(output+".uncov","w")
+	out = open(output,"w")
+	out.write("UNCOV"+"\n")
+	out.write(">"+savedLine.rstrip("\n"))
 	out.write("Covered: "+str(testBool)+"\n")
 	out.close()
+
 
 print time.time() - t0, "seconds process time"
 

@@ -1,0 +1,6 @@
+outdir: AGapEs_analysis
+tree: data/tree.txt
+references: data/references.fa
+contigs: data/contigs.fa
+reads: data/reads.fq
+is_coordinates: data/IS.txt
