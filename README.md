@@ -29,7 +29,16 @@ install_FPSAC.sh
 snakemake --snakefile preprocessing.snakefile -j <N>
 ```
 
-FPSAC computes the template sequences based on a multiple alignment of the respective extant gap sequences. If gaps get too larger because of inadequate marker coverage, this alignment can fail.
+FPSAC computes the template sequences based on a multiple alignment of the respective extant gap sequences. 
+
+Important files created:
+* $DIR/X.info - overview files for simple, conflicting and IS gaps summarizing ingroup and outgroup occurrences, IS annotations and potential conflicting components respectively
+* $DIR/results/contigs/families_with_contig_names - markers computed (FPSAC) 
+* $DIR/results/contigs/families.fasta - markers fasta sequencs (FPSAC)
+* $DIR/results/finishing/alignments/ - template sequences for all gaps and underlying extant gap sequences
+
+CHECKPOINT 1:
+If gaps get too large because of inadequate marker coverage, the multiple alignment of extant gap sequences can fail.
 
 ### Filling gaps with AGapEs
 
@@ -37,17 +46,28 @@ FPSAC computes the template sequences based on a multiple alignment of the respe
 snakemake --snakefile run_gapFilling.snakefile -j <N>
 snakemake --snakefile run_partial_gapFilling.snakefile -j <N>
 ```
+Important files/directories created:
+* $DIR/results/assemblies/ - assemblies and full gap filling results for all gaps
+* $DIR/results/gapFilling_partial/ - assemblies and partial gap filling results for not completely filled simple gaps
+* $DIR/results/gapFilling_partial_IS/ - assemblies and partial gap filling results for not completely filled IS gaps
+
+CHECKPOINT 2: 
+Based on the gap filling results, the conflicting components have to be solved manually. 
 
 ### Finishing
 
 ```
 snakemake --snakefile finishing.snakefile -j <N>
 ```
+Important files created:
+* $DIR/results/finishing/ancestral_sequence_map_augmented
+* $DIR/results/finishing/ancestral_sequence.fasta
 
+The last step will produce a set of scaffolds from kept adjacencies and gap sequences either based on aDNA reads or completed with template sequence. We extend the sequence map provided by FPSAC with
 
 
 
 # References
-[1] Luhmann, Nina, Daniel Doerr, and Cedric Chauve. "Improved assemblies and comparison of two ancient Yersinia pestis genomes." bioRxiv (2017): 073445.
+[1] Nina Luhmann, Daniel Doerr, and Cedric Chauve. "Improved assemblies and comparison of two ancient Yersinia pestis genomes." bioRxiv (2017): 073445.
 
-[2] Rajaraman, Ashok, Eric Tannier, and Cedric Chauve. "FPSAC: fast phylogenetic scaffolding of ancient contigs." Bioinformatics 29.23 (2013): 2987-2994.
+[2] Ashok Rajaraman, Eric Tannier, and Cedric Chauve. "FPSAC: fast phylogenetic scaffolding of ancient contigs." Bioinformatics 29.23 (2013): 2987-2994.
