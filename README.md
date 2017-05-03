@@ -63,7 +63,7 @@ Important files created:
 * $DIR/results/finishing/ancestral_sequence_map_augmented
 * $DIR/results/finishing/ancestral_sequence.fasta
 
-The last step will produce a set of scaffolds from kept adjacencies and gap sequences either based on aDNA reads or completed with template sequence. We extend the sequence map provided by FPSAC with
+The last step will produce a set of scaffolds from kept adjacencies and gap sequences either based on aDNA reads or completed with template sequence. The sequence map also indicates the type of gap and support by aDNA reads.
 
 
 
