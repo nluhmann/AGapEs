@@ -1,7 +1,7 @@
 configfile: "./config.yaml"
 
 #create directory structure
-snakemake.utils.makedirs('AGapEs_analysis/results_AGapEs/assemblies/consistent')
+snakemake.utils.makedirs('AGapEs_analysis/results_AGapEs/assemblies/consistent/')
 snakemake.utils.makedirs('AGapEs_analysis/results_AGapEs/finishing/all_extant_IS/')
 snakemake.utils.makedirs('AGapEs_analysis/results_AGapEs/assemblies/IS_gaps/')
 snakemake.utils.makedirs('AGapEs_analysis/results_AGapEs/finishing/alignments/consistent/')
@@ -92,14 +92,12 @@ rule muscle2:
 
 
 
-
-
-#todo: generalize from yersinia pestis
 rule infos:
 	input:
 		adj="AGapEs_analysis/results_AGapEs/scaffold/adjacencies",
 		iscoords=config["is_coordinates"],
 		coords="AGapEs_analysis/results_AGapEs/scaffold/gaps_coordinates_and_length",
+		species="AGapEs_analysis/input/species"
 	output:
 		"AGapEs_analysis/adjacencies.info",
 		"AGapEs_analysis/conflicts.info",
@@ -109,7 +107,7 @@ rule infos:
 	log:
 		"logs/comp_infos.log"
 	shell:
-		"python2 scripts/adjacency_infos.py {input.adj} {input.iscoords} {input.coords} {output}"
+		"python2 scripts/adjacency_infos.py {input.adj} {input.iscoords} {input.coords} {output} {input.species}"
 
 rule mvIS:
 	input:

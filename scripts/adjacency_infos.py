@@ -4,8 +4,8 @@ import sys
 
 #adjacency information files, based on reference occurences before linearization, considering all adjacencies
 
-ingroup = ["Yersinia_pestis_Antiqua","Yersinia_pestis_KIM_10","Yersinia_pestis_Nepal516","Yersinia_pestis_CO92","Yersinia_pestis_Z176003"]
-outgroup = ["Yersinia_pseudotuberculosis_IP_32953","Yersinia_pseudotuberculosis_YPIII","Yersinia_pseudotuberculosis_IP_31758","Yersinia_pseudotuberculosis_PB1","Yersinia_pestis_biovar_Microtus_str_91001","Yersinia_pestis_Pestoides_F","Yersinia_pestis_Angola"]
+#ingroup = ["Yersinia_pestis_Antiqua","Yersinia_pestis_KIM_10","Yersinia_pestis_Nepal516","Yersinia_pestis_CO92","Yersinia_pestis_Z176003"]
+#outgroup = ["Yersinia_pseudotuberculosis_IP_32953","Yersinia_pseudotuberculosis_YPIII","Yersinia_pseudotuberculosis_IP_31758","Yersinia_pseudotuberculosis_PB1","Yersinia_pestis_biovar_Microtus_str_91001","Yersinia_pestis_Pestoides_F","Yersinia_pestis_Angola"]
 
 
 adjacencies = sys.argv[1]
@@ -16,6 +16,34 @@ conflictsoutfile = sys.argv[5]
 nonConservedoutfile = sys.argv[6]
 conservedoutfile = sys.argv[7]
 ISgapsoutfile = sys.argv[8]
+inoutfile = sys.argv[9] #file input/species
+
+
+#determine ingroup and outgroup species
+ingroup = []
+outgroup = []
+
+ingroup_b = False
+outgroup_b = False
+
+inout = open(inoutfile, "r")
+for line in inout:
+	if line.startswith("#"):
+		if line.rstrip("\n") == "#outgroup":
+			outgroup_b = True
+			ingroup_b = False
+		elif line.rstrip("\n") == "#ingroup":
+			ingroup_b = True
+			outgroup_b = False
+	else:
+		if ingroup_b:
+			ingroup.append(line.rstrip("\n"))
+		if outgroup_b:
+			outgroup.append(line.rstrip("\n"))
+			
+
+
+
 
 
 #key: genome, value: (start, stop, element)
