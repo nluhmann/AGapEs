@@ -27,6 +27,7 @@ rule fpsac_start:
 		"AGapEs_analysis/results_AGapEs/scaffold/gaps_coordinates_and_length",
 		"AGapEs_analysis/input/extant_genomes.fasta",
 		"AGapEs_analysis/results_AGapEs/contigs/families.fasta",
+		"AGapEs_analysis/input/species"
 	log:
 		"logs/fpsac/start.log"
 	shell:
