@@ -16,9 +16,12 @@ Each snakefile ends with a "checkpoint" that can be used to e.g. check template 
 
 ### Input
 * aDNA reads in fasta/fastq format
-* assembled contigs of aDNA reads in fasta format
-* assembled reference sequences in fasta format
-* phylogenetic tree in newick format, position of the ancient sample marked with @
+* assembled contigs of aDNA reads in fasta format (multi-fasta file)
+* assembled reference sequences in fasta format (multi-fasta file)
+* phylogenetic tree in newick format, placement of the ancient sample marked with @
+* IS annotations in extant genomes
+
+Before running the pipeline, the location of these input files has to be specified in the config.yaml.
 
 ### Preprocessing
 
@@ -34,13 +37,17 @@ FPSAC computes the template sequences based on a multiple alignment of the respe
 Important files created:
 * $DIR/X.info - overview files for simple, conflicting and IS gaps summarizing ingroup and outgroup occurrences, IS annotations and potential conflicting components respectively
 * $DIR/results/contigs/families_with_contig_names - markers computed (FPSAC) 
-* $DIR/results/contigs/families.fasta - markers fasta sequencs (FPSAC)
+* $DIR/results/contigs/families.fasta - markers sequences (FPSAC)
 * $DIR/results/finishing/alignments/ - template sequences for all gaps and underlying extant gap sequences
 
-CHECKPOINT 1:
-If gaps get too large because of inadequate marker coverage, the multiple alignment of extant gap sequences can fail.
+**CHECKPOINT 1**:
+If gaps get too large because of inadequate marker coverage, the multiple alignment of extant gap sequences can fail. In these cases, no template gap sequence will be used in the subsequent gap filling step. If a multiple alignment has been successfully obtained with other software, the file can simply be copied into the respective folder and will be picked up by the pipeline.
+
+
 
 ### Filling gaps with AGapEs
+
+The two following snakefiles define the full and partial gap filling steps. Since gaps are filled independently, these should be run with multiple threads if possible (-j parameter).
 
 ```
 snakemake --snakefile run_gapFilling.snakefile -j <N>
@@ -51,7 +58,7 @@ Important files/directories created:
 * $DIR/results/gapFilling_partial/ - assemblies and partial gap filling results for not completely filled simple gaps
 * $DIR/results/gapFilling_partial_IS/ - assemblies and partial gap filling results for not completely filled IS gaps
 
-CHECKPOINT 2: 
+**CHECKPOINT 2**: 
 Based on the gap filling results, the conflicting components have to be solved manually. 
 
 ### Finishing
