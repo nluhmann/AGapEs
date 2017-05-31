@@ -73,7 +73,7 @@ Important files created:
 The last step will produce a set of scaffolds from kept adjacencies and gap sequences either based on aDNA reads or completed with template sequence. The sequence map also indicates the type of gap and support by aDNA reads.
 
 
-### Example
+## Example
 
 The pipeline has been used to obtain improved assemblies of ancient Yersinia pestis genomes as described in [1]. 
 
