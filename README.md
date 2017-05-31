@@ -19,7 +19,7 @@ Each snakefile ends with a "checkpoint" that can be used to e.g. check template 
 * assembled contigs of aDNA reads in fasta format (multi-fasta file)
 * assembled reference sequences in fasta format (multi-fasta file)
 * phylogenetic tree in newick format, placement of the ancient sample marked with @
-* IS annotations in extant genomes
+* IS annotations in extant genomes, format >Genome_ID:start-stop IS_element
 
 Before running the pipeline, the location of these input files has to be specified in the config.yaml.
 
@@ -71,6 +71,13 @@ Important files created:
 * $DIR/results/finishing/ancestral_sequence.fasta
 
 The last step will produce a set of scaffolds from kept adjacencies and gap sequences either based on aDNA reads or completed with template sequence. The sequence map also indicates the type of gap and support by aDNA reads.
+
+
+### Example
+
+The pipeline has been used to obtain improved assemblies of ancient Yersinia pestis genomes as described in [1]. 
+
+
 
 
 
