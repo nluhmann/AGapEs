@@ -15,8 +15,10 @@ Gap filling based on template sequence for ancient DNA (aDNA) data [1]
 ```
 install_FPSAC.sh
 snakemake --snakefile preprocessing.snakefile -j <N>
+#Checkpoint: check templates
 snakemake --snakefile run_gapFilling.snakefile -j <N>
 snakemake --snakefile run_partial_gapFilling.snakefile -j <N>
+#Checkpoint: solve conflicts
 snakemake --snakefile finishing.snakefile -j <N>
 ```
 
@@ -100,7 +102,7 @@ We mark all gaps as dubious (DUB) if they are not covered by any reads (COV) or 
 ## Example
 
 The pipeline has been used to obtain improved assemblies of ancient Yersinia pestis genomes as described in [1]. 
-
+The two config files ```config_London.yaml``` and ```config_Marseille.yaml``` describe all input data except the read files that have to be downloaded from the respective databases, IDs given in [1].
 
 
 
