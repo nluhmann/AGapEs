@@ -10,6 +10,18 @@ Gap filling based on template sequence for ancient DNA (aDNA) data [1]
 * bedtools
 * FPSAC (install by running ``` install_FPSAC.sh ```)
 
+### Quickstart ###
+
+```
+install_FPSAC.sh
+snakemake --snakefile preprocessing.snakefile -j <N>
+snakemake --snakefile run_gapFilling.snakefile -j <N>
+snakemake --snakefile run_partial_gapFilling.snakefile -j <N>
+snakemake --snakefile finishing.snakefile -j <N>
+```
+
+
+
 ## Pipeline
 We split the pipeline into 4 snakefiles that should be run successively. If possible, we suggest to allow running the snakefile with multiple cores (parameter -j), since many jobs in the pipeline can be run in parallel.
 Each snakefile ends with a "checkpoint" that can be used to e.g. check template sequences or solve conflicts based on gap filling results. The following paragraphs provide detailed information for each pipeline step and how to run the snakefiles.
@@ -35,7 +47,7 @@ snakemake --snakefile preprocessing.snakefile -j <N>
 FPSAC computes the template sequences based on a multiple alignment of the respective extant gap sequences. 
 
 Important files created:
-* ``` $DIR/<X>.info ``` - overview files for simple, conflicting and IS gaps summarizing ingroup and outgroup occurrences, IS annotations and potential conflicting components respectively
+* ``` $DIR/<X>.info ``` - overview files for simple, conflicting and IS gaps. Contains for each potential adjacency: marker extremities, gap ID, in-group and outgrip occurrences and positions, length differences in the extant gaps, IS annotations, conflicting components
 * ``` $DIR/results/contigs/families_with_contig_names ``` - markers computed (FPSAC) 
 * ``` $DIR/results/contigs/families.fasta ``` - markers sequences (FPSAC)
 * ``` $DIR/results/finishing/alignments/ ``` - template sequences for all gaps and underlying extant gap sequences
@@ -59,6 +71,16 @@ Important files/directories created:
 * ``` $DIR/results/gapFilling_partial/ ``` - assemblies and partial gap filling results for not completely filled simple gaps
 * ``` $DIR/results/gapFilling_partial_IS/ ``` - assemblies and partial gap filling results for not completely filled IS gaps
 
+!!!
+
+templates/
+  contains for each ancestral gap the template gap sequence together with its flanking marker sequences, for IS-annotated gaps all template alternatives are given
+  The header of each file is:
+  >gapID   leftMarker rightMarker length       gapStart-gapEnd
+
+
+
+
 **CHECKPOINT 2**: 
 Based on the gap filling results, the conflicting components as summarized in $DIR/conflicts.info have to be solved manually. Before running the finishing phase, the two files ``` $DIR/results/scaffold/adjacencies_kept ``` and ``` $DIR/results/scaffold/adjacencies_discarded ``` have to be adjusted accordingly.
 
@@ -70,8 +92,12 @@ The last step will produce a set of scaffolds from kept adjacencies and gap sequ
 snakemake --snakefile finishing.snakefile -j <N>
 ```
 Important files created:
-* $DIR/results/finishing/ancestral_sequence_map_augmented
-* $DIR/results/finishing/ancestral_sequence.fasta
+* ``` $DIR/results/finishing/ancestral_sequence.fasta ``` - resulting ancestral scaffolds
+* ``` $DIR/results/finishing/ancestral_sequence_map_augmented ``` - detailed map over the resulting scaffolds, including the status of all gaps included in the assembly. For each gap we have a line:
+  	   ``` GAP gapID adjacency position orientation length length_covered_by_reads status OK/DUB ```
+We mark all gaps as dubious (DUB) if they are not covered by any reads (COV) or their extant gaps are very unconserved (EXT_LENGTH_DIFF).
+
+
 
 
 ## Example
