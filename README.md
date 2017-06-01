@@ -81,6 +81,8 @@ The pipeline has been used to obtain improved assemblies of ancient Yersinia pes
 
 
 
+***
+
 
 # References
 [1] Nina Luhmann, Daniel Doerr, and Cedric Chauve. "Improved assemblies and comparison of two ancient Yersinia pestis genomes." bioRxiv (2017): 073445.
