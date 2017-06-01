@@ -1,0 +1,6 @@
+outdir: AGapEs_analysis
+tree: pestis_archiv/data/yersinia_species_tree
+references: pestis_archiv/data/yersinia_pestis_pseudotuberculosis.fa
+contigs: pestis_archiv/London/denovo/BLACKDEATH_enriched_k19_300.contigs.fa
+reads: <reads.fastq>
+is_coordinates: pestis_archiv/data/IS_coords_combined.txt
