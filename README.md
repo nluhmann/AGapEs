@@ -4,7 +4,7 @@ Gap filling based on template sequence for ancient DNA (aDNA) data [1]
 ### Requirements
 
 [![Snakemake](https://img.shields.io/badge/snakemake-≥3.5.2-brightgreen.svg?style=flat-square)](http://snakemake.bitbucket.org)
-* python
+* python2
 * bwa
 * samtools
 * bedtools
@@ -21,7 +21,7 @@ Each snakefile ends with a "checkpoint" that can be used to e.g. check template 
 * phylogenetic tree in newick format, placement of the ancient sample marked with @
 * IS annotations in extant genomes, format >Genome_ID:start-stop IS_element
 
-Before running the pipeline, the location of these input files has to be specified in the config.yaml.
+Before running the pipeline, the location of these input files has to be specified in the file config.yaml, an example is given in this repository.
 
 ### Preprocessing
 
