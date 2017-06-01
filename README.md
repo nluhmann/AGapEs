@@ -12,7 +12,7 @@ Gap filling based on template sequence for ancient DNA (aDNA) data [1]
 
 ## Pipeline
 We split the pipeline into 4 snakefiles that should be run successively. If possible, we suggest to allow running the snakefile with multiple cores (parameter -j), since many jobs in the pipeline can be run in parallel.
-Each snakefile ends with a "checkpoint" that can be used to e.g. check template sequences or solve conflicts based on gap filling results.
+Each snakefile ends with a "checkpoint" that can be used to e.g. check template sequences or solve conflicts based on gap filling results. The following paragraphs provide detailed information for each pipeline step and how to run the snakefiles.
 
 ### Input
 * aDNA reads in fasta/fastq format
@@ -60,9 +60,11 @@ Important files/directories created:
 * ``` $DIR/results/gapFilling_partial_IS/ ``` - assemblies and partial gap filling results for not completely filled IS gaps
 
 **CHECKPOINT 2**: 
-Based on the gap filling results, the conflicting components as summarized in $DIR/<X>.info have to be solved manually. 
+Based on the gap filling results, the conflicting components as summarized in $DIR/conflicts.info have to be solved manually. Before running the finishing phase, the two files ``` $DIR/results/scaffold/adjacencies_kept ``` and ``` $DIR/results/scaffold/adjacencies_discarded ``` have to be adjusted accordingly.
 
 ### Finishing
+
+The last step will produce a set of scaffolds from kept adjacencies and gap sequences either based on aDNA reads or completed with template sequence. The sequence map also indicates the type of gap and support by aDNA reads.
 
 ```
 snakemake --snakefile finishing.snakefile -j <N>
@@ -70,8 +72,6 @@ snakemake --snakefile finishing.snakefile -j <N>
 Important files created:
 * $DIR/results/finishing/ancestral_sequence_map_augmented
 * $DIR/results/finishing/ancestral_sequence.fasta
-
-The last step will produce a set of scaffolds from kept adjacencies and gap sequences either based on aDNA reads or completed with template sequence. The sequence map also indicates the type of gap and support by aDNA reads.
 
 
 ## Example
