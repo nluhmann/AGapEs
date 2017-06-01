@@ -8,7 +8,7 @@ Gap filling based on template sequence for ancient DNA (aDNA) data [1]
 * bwa
 * samtools
 * bedtools
-* FPSAC
+* FPSAC (install by running install_FPSAC.sh)
 
 ## Pipeline
 We split the pipeline into 4 snakefiles that should be run successively. If possible, we suggest to allow running the snakefile with multiple cores (parameter -j), since many jobs in the pipeline can be run in parallel.
@@ -19,9 +19,9 @@ Each snakefile ends with a "checkpoint" that can be used to e.g. check template 
 * assembled contigs of aDNA reads in fasta format (multi-fasta file)
 * assembled reference sequences in fasta format (multi-fasta file)
 * phylogenetic tree in newick format, placement of the ancient sample marked with @
-* IS annotations in extant genomes, format >Genome_ID:start-stop IS_element
+* IS annotations in extant genomes, format ``` >Genome_ID:start-stop IS_element ```
 
-Before running the pipeline, the location of these input files has to be specified in the file config.yaml, an example is given in this repository.
+Before running the pipeline, the location of these input files has to be specified in the file ``` config.yaml```.
 
 ### Preprocessing
 
