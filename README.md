@@ -67,16 +67,13 @@ snakemake --snakefile run_partial_gapFilling.snakefile -j <N>
 ```
 
 Important files/directories created:
-* ``` $DIR/results/assemblies/ ``` - assemblies and full gap filling results for all gaps
+* ``` $DIR/results/assemblies/<simple|IS|conflicting>/gap_*assembly ``` - template gap sequence together with its flanking marker sequences, for IS-annotated gaps all template alternatives are given. The header of each assembly file is ``` >gapID   leftMarker rightMarker length  gapStart-gapEnd ```
+* ``` $DIR/results/assemblies/<simple|IS|conflicting>/gap_*noclips ``` - mapping BAM files
+* ``` $DIR/results/assemblies/<simple|IS|conflicting>/gap_*out ``` - gap filling result. The header of each assembly file is ``` >gapID   leftMarker rightMarker length  gapStart-gapEnd dist_to_template``` followed by the reconstructed gap sequence
 * ``` $DIR/results/gapFilling_partial/ ``` - assemblies and partial gap filling results for not completely filled simple gaps
 * ``` $DIR/results/gapFilling_partial_IS/ ``` - assemblies and partial gap filling results for not completely filled IS gaps
 
-!!!
-
-templates/
-  contains for each ancestral gap the template gap sequence together with its flanking marker sequences, for IS-annotated gaps all template alternatives are given
-  The header of each file is:
-  >gapID   leftMarker rightMarker length       gapStart-gapEnd
+ 
 
 
 
