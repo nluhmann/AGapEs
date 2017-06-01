@@ -102,7 +102,7 @@ We mark all gaps as dubious (DUB) if they are not covered by any reads (COV) or 
 ## Example
 
 The pipeline has been used to obtain improved assemblies of ancient Yersinia pestis genomes as described in [1]. 
-The two config files ```config_London.yaml``` and ```config_Marseille.yaml``` describe all input data except the read files that have to be downloaded from the respective databases, IDs given in [1].
+The two config files ```config_London.yaml``` and ```config_Marseille.yaml``` describe all input data for both assemblies. To run the pipeline, download input files from [here](http://paleogenomics.irmacs.sfu.ca/DOWNLOADS/AGAPES_data_results.zip) and the aDNA read files from the respective databases, IDs given in [1].
 
 
 
