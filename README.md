@@ -33,7 +33,7 @@ Each snakefile ends with a "checkpoint" that can be used to e.g. check template 
 * assembled contigs of aDNA reads in fasta format (multi-fasta file)
 * assembled reference sequences in fasta format (multi-fasta file)
 * phylogenetic tree in newick format, placement of the ancient sample marked with @
-* IS annotations in extant genomes, format ``` >Genome_ID:start-stop IS_element ```
+* IS annotations for all considered IS families in extant genomes, format ``` >Genome_ID:start-stop IS_family_ID ```
 
 Before running the pipeline, the location of these input files has to be specified in the file ``` config.yaml```.
 
@@ -48,8 +48,8 @@ snakemake --snakefile preprocessing.snakefile -j <N>
 
 FPSAC computes the template sequences based on a multiple alignment of the respective extant gap sequences. 
 
-Important files created:
-* ``` $DIR/<X>.info ``` - overview files for simple, conflicting and IS gaps. Contains for each potential adjacency: marker extremities, gap ID, in-group and outgrip occurrences and positions, length differences in the extant gaps, IS annotations, conflicting components
+Important files created in directory $DIR='AGapEs_analysis':
+* ``` $DIR/<X>.info ``` - overview files for X={simple|conflicting|IS} gaps. Contains for each potential adjacency: marker extremities, gap ID, ingroup and outgroup occurrences and positions, length differences in the extant gaps, IS annotations, conflicting components
 * ``` $DIR/results/contigs/families_with_contig_names ``` - markers computed (FPSAC) 
 * ``` $DIR/results/contigs/families.fasta ``` - markers sequences (FPSAC)
 * ``` $DIR/results/finishing/alignments/ ``` - template sequences for all gaps and underlying extant gap sequences
@@ -69,9 +69,9 @@ snakemake --snakefile run_partial_gapFilling.snakefile -j <N>
 ```
 
 Important files/directories created:
-* ``` $DIR/results/assemblies/<simple|IS|conflicting>/gap_*assembly ``` - template gap sequence together with its flanking marker sequences, for IS-annotated gaps all template alternatives are given. The header of each assembly file is ``` >gapID   leftMarker rightMarker length  gapStart-gapEnd ```
-* ``` $DIR/results/assemblies/<simple|IS|conflicting>/gap_*noclips ``` - mapping BAM files
-* ``` $DIR/results/assemblies/<simple|IS|conflicting>/gap_*out ``` - gap filling result. The header of each assembly file is ``` >gapID   leftMarker rightMarker length  gapStart-gapEnd dist_to_template``` followed by the reconstructed gap sequence
+* ``` $DIR/results/assemblies/<simple|IS|conflicting>/<gapID>.fasta_assembly ``` - template gap sequence together with its flanking marker sequences, for IS-annotated gaps all template alternatives are given. The header of each assembly file is ``` >gapID   leftMarker rightMarker length  gapStart-gapEnd ```
+* ``` $DIR/results/assemblies/<simple|IS|conflicting>/<gapID>.bam_noclips ``` - mapping BAM files, soft-clipped reads are removed
+* ``` $DIR/results/assemblies/<simple|IS|conflicting>/<gapID>.out ``` - gap filling result. The header of each assembly file is ``` >gapID   leftMarker rightMarker length  gapStart-gapEnd dist_to_template``` followed by the reconstructed gap sequence
 * ``` $DIR/results/gapFilling_partial/ ``` - assemblies and partial gap filling results for not completely filled simple gaps
 * ``` $DIR/results/gapFilling_partial_IS/ ``` - assemblies and partial gap filling results for not completely filled IS gaps
 
