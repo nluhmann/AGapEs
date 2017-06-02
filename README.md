@@ -1,5 +1,5 @@
 # AGapEs
-Gap filling based on template sequence for ancient DNA (aDNA) data [1]
+Gap filling based on template sequence for fragmented ancient DNA (aDNA) assemblies [1].
 
 ### Requirements
 
@@ -22,7 +22,7 @@ snakemake --snakefile run_partial_gapFilling.snakefile -j <N>
 snakemake --snakefile finishing.snakefile -j <N>
 ```
 
-
+Note: AGapEs has not been tested in compute cluster environments yet.
 
 ## Pipeline
 We split the pipeline into 4 snakefiles that should be run successively. If possible, we suggest to allow running the snakefile with multiple cores (parameter -j), since many jobs in the pipeline can be run in parallel.
