@@ -107,7 +107,6 @@ REPORT=$DIR/report_$8
 echo "---> Formatting and copying input files"
 echo "python2 src/fpsac_format_fasta.py $4 $EXTANT_GENOMES_FA $EXTANT_GENOMES_LG"
 python2 src/fpsac_format_fasta.py $4 $EXTANT_GENOMES_FA $EXTANT_GENOMES_LG
-echo ""
 echo "python2 src/fpsac_format_fasta.py $3 $ANCESTRAL_CONTIGS_FA $ANCESTRAL_CONTIGS_LG"
 python2 src/fpsac_format_fasta.py $3 $ANCESTRAL_CONTIGS_FA $ANCESTRAL_CONTIGS_LG
 cp $2 $TREE
@@ -208,6 +207,7 @@ python2 src/fpsac_filter_families.py \
  echo "---> Filtering high multiplicity homologous families"
 python2 filterUniversalFamilies.py \
 	${FAMILIES_COORDINATES_FILTERED} \
+	${SPECIES} \
 	${FAMILIES_COORDINATES_FILTERED_UNI}
 # # Output: ${FAMILIES_COORDINATES_FILTERED_UNI} - universal families
 
