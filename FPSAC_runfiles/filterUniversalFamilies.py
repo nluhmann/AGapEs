@@ -43,6 +43,9 @@ for line in file:
 	elif not line == "\n":
 		check_hash[line.split(".")[0]] = 1
 		counter.append(line)
-		
 
+		
+if len(check_hash.keys()) == len(families) and len(counter) == len(families) +1:
+	for elem in counter:
+		out.write(elem)
 file.close()
