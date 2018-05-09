@@ -111,6 +111,6 @@ The two config files ```config_London.yaml``` and ```config_Marseille.yaml``` de
 
 
 ## References
-[1] Nina Luhmann, Daniel Doerr, and Cedric Chauve. "Improved assemblies and comparison of two ancient Yersinia pestis genomes." bioRxiv (2017): 073445.
+[1] Nina Luhmann, Daniel Doerr, and Cedric Chauve. "Comparative scaffolding and gap filling of ancient bacterial genomes applied to two ancient Yersinia pestis genomes." Microbial genomics. 2017 Jul 8;3(9).
 
 [2] Ashok Rajaraman, Eric Tannier, and Cedric Chauve. "FPSAC: fast phylogenetic scaffolding of ancient contigs." Bioinformatics 29.23 (2013): 2987-2994.
